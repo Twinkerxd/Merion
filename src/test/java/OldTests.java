@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
@@ -131,7 +132,10 @@ public class OldTests {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10), Duration.ofMillis(100));
         wait.until(ExpectedConditions.textToBe(By.cssSelector("#updatingButton"), "Merion"));
-        System.out.println(button.getText());
+
+        String actualResult = driver.findElement(By.cssSelector("#updatingButton")).getText();
+
+        Assertions.assertEquals("Merion", actualResult);
     }
 
     @Test
@@ -173,13 +177,13 @@ public class OldTests {
 
         driver.findElement(By.cssSelector(".btn.btn-outline-primary.mt-3")).click();
 
-        String zip = driver.findElement(By.cssSelector("#zip-code")).getCssValue("background-color");
-        String email = driver.findElement(By.cssSelector("#e-mail")).getCssValue("background-color");
-        String phone = driver.findElement(By.cssSelector("#phone")).getCssValue("background-color");
+        String zipColor = driver.findElement(By.cssSelector("#zip-code")).getCssValue("background-color");
+        String emailColor = driver.findElement(By.cssSelector("#e-mail")).getCssValue("background-color");
+        String phoneColor = driver.findElement(By.cssSelector("#phone")).getCssValue("background-color");
 
-        System.out.println(zip);
-        System.out.println(email);
-        System.out.println(phone);
+        Assertions.assertEquals("rgba(248, 215, 218, 1)", zipColor);
+        Assertions.assertEquals("rgba(248, 215, 218, 1)", emailColor);
+        Assertions.assertEquals("rgba(248, 215, 218, 1)", phoneColor);
     }
 
     @Test
@@ -199,7 +203,8 @@ public class OldTests {
             return !(oldText.equals(newText));
         });
 
-        System.out.println("===========> " + driver.findElement(By.cssSelector(".screen")).getText());
+        String actualResult = driver.findElement(By.cssSelector(".screen")).getText();
+        Assertions.assertEquals("15", actualResult);
     }
 
     @Test
@@ -222,10 +227,7 @@ public class OldTests {
         driver.findElement(By.cssSelector("#postal-code")).sendKeys("1613");
         driver.findElement(By.cssSelector("#continue")).click();
 
-        String result = driver.findElement(By.cssSelector("[data-test='total-label']")).getText();
-        driver.close();
-        System.out.println(result);
-        System.out.println(result);
-        System.out.println(result);
+        String actualResult = driver.findElement(By.cssSelector("[data-test='total-label']")).getText();
+        Assertions.assertEquals("Total: $58.29", actualResult);
     }
 }
