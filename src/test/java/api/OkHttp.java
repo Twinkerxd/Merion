@@ -1,10 +1,12 @@
 package api;
 
 import api.model.AuthResponse;
+import api.model.CompanyResponse;
 import okhttp3.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 public class OkHttp {
     public static final String TODOURL = "https://todo-app-sky.herokuapp.com/";
@@ -28,11 +30,6 @@ public class OkHttp {
         Request getAllTasksRequest = new Request.Builder().url(TODOURL).build();
         Response response = client.newCall(getAllTasksRequest).execute();
 
-        System.out.println();
-        System.out.println("---------------------------------------------------------------------------------------");
-        System.out.println("Response 1: " + response.body().string());
-        System.out.println("Code: " + response.code());
-
         String json = "{\"title\":\"My task OkHttp v1\",\"completed\":false}";
         RequestBody requestBody = RequestBody.create(json, JSON);
 
@@ -43,12 +40,6 @@ public class OkHttp {
                 .build();
 
         response = client.newCall(createNewTaskRequest).execute();
-        System.out.println();
-        System.out.println("---------------------------------------------------------------------------------------");
-        System.out.println("Response 2: " + response.body().string());
-        System.out.println("Code: " + response.code());
-
-
     }
 
 
@@ -60,16 +51,14 @@ public class OkHttp {
         String token = authResponse.userToken();
 
         //create company
-//        xClientsWebClient.createNewCompany("Twinker company", "1613", token);
+        xClientsWebClient.createNewCompany("Twinker company", "1613", token);
 
         //print companies
-//        List<String> companyNamesAndIds = xClientsWebClient.getCompanyNames();
-//        System.out.println(companyNamesAndIds);
+        List<String> companyNamesAndIds = xClientsWebClient.getCompanyNames();
+        System.out.println(companyNamesAndIds);
 
         //delete company
-//        CompanyResponse response = xClientsWebClient.deleteCompany(649, token);
-//        System.out.println(response);
-
-
+        CompanyResponse response = xClientsWebClient.deleteCompany(649, token);
+        System.out.println(response);
     }
 }
