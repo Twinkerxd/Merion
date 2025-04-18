@@ -230,4 +230,14 @@ public class OldTests {
         String actualResult = driver.findElement(By.cssSelector("[data-test='total-label']")).getText();
         Assertions.assertEquals("Total: $58.29", actualResult);
     }
+
+    @Test
+    public void deleteMe() {
+        String url = "https://bonigarcia.dev/selenium-webdriver-java/loading-images.html";
+
+        driver.get(url);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        String src = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#landscape"))).getDomAttribute("src");
+        System.out.println(src);
+    }
 }
